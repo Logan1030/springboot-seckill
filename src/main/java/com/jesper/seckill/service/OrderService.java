@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by jiangyunxiong on 2018/5/23.
@@ -31,6 +32,13 @@ public class OrderService {
 
     public OrderInfo getOrderById(long orderId) {
         return orderMapper.getOrderById(orderId);
+    }
+
+    /**
+     * 获取所有未支付的订单
+     */
+    public List<OrderInfo> getUnpaidOrders() {
+        return orderMapper.getUnpaidOrders();
     }
 
     /**

@@ -4,6 +4,8 @@ import com.jesper.seckill.bean.OrderInfo;
 import com.jesper.seckill.bean.SeckillOrder;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 /**
  * Created by jiangyunxiong on 2018/5/23.
  */
@@ -31,5 +33,8 @@ public interface OrderMapper {
 
     @Select("select * from sk_order_info where id = #{orderId}")
     public OrderInfo getOrderById(@Param("orderId")long orderId);
+
+    @Select("select * from sk_order_info where status = 0")
+    public List<OrderInfo> getUnpaidOrders();
 
 }
