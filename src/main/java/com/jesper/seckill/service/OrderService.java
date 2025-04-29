@@ -31,7 +31,7 @@ public class OrderService {
     }
 
     public OrderInfo getOrderById(long orderId) {
-        return orderMapper.getOrderById(orderId);
+        return redisService.get(OrderKey.getOrderById, "" + orderId, OrderInfo.class);
     }
 
     /**
@@ -52,22 +52,31 @@ public class OrderService {
         orderInfo.setGoodsCount(1);
         orderInfo.setGoodsId(goods.getId());
         orderInfo.setGoodsName(goods.getGoodsName());
-        orderInfo.setGoodsPrice(goods.getGoodsPrice());
+        orderInfo.setGoodsPrice(goods.getSeckillPrice());
         orderInfo.setOrderChannel(1);
         orderInfo.setStatus(0);
         orderInfo.setUserId(user.getId());
-        orderMapper.insert(orderInfo);
+        redisService.set(OrderKey.getOrderById, "" + orderInfo.getId(), orderInfo);
 
         SeckillOrder seckillOrder = new SeckillOrder();
         seckillOrder.setGoodsId(goods.getId());
         seckillOrder.setOrderId(orderInfo.getId());
         seckillOrder.setUserId(user.getId());
-        orderMapper.insertSeckillOrder(seckillOrder);
-
         redisService.set(OrderKey.getSeckillOrderByUidGid, "" + user.getId() + "_" + goods.getId(), seckillOrder);
 
         return orderInfo;
     }
 
-
+    /**
+     * 清理过期订单
+     * @return 清理的订单数量
+     */
+    public int cleanExpiredOrders() {
+        // TODO: 实现清理过期订单的逻辑
+        // 1. 查询所有未支付的订单
+        // 2. 检查订单是否超过支付时间（比如30分钟）
+        // 3. 将超时订单状态更新为已取消
+        // 4. 恢复商品库存
+        return 0;
+    }
 }

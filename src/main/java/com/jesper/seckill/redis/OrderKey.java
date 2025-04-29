@@ -5,8 +5,9 @@ package com.jesper.seckill.redis;
  */
 public class OrderKey extends BasePrefix {
 
-    public OrderKey(String prefix) {
-        super(prefix);
+    public OrderKey(int expireSeconds, String prefix) {
+        super(expireSeconds, prefix);
     }
-    public static OrderKey getSeckillOrderByUidGid = new OrderKey("seckill");
+    public static OrderKey getSeckillOrderByUidGid = new OrderKey(0, "seckill");
+    public static OrderKey getOrderById = new OrderKey(0, "order");
 }
