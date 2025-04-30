@@ -8,10 +8,10 @@ WORKDIR /app
 COPY target/*.jar app.jar
 
 # 暴露应用端口
-EXPOSE 8082
+EXPOSE 8080
 
 # 设置时区
 ENV TZ=Asia/Shanghai
 
 # 启动命令
-ENTRYPOINT ["java","-jar","app.jar"] 
+ENTRYPOINT ["java", "-jar", "app.jar"] 
